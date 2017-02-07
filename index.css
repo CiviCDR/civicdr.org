@@ -1,0 +1,14 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+.white {
+  color: #fff;
+}
+
+.salmon {
+  color: #F06562;
+}
+
+.bg-salmon {
+  background-color: #F06562;
+}
