@@ -29,7 +29,9 @@ function intro () {
 
   return html`
     <section class="pl5 pr5 pb5 pt2 bg-salmon" id="intro">
-      ${contact('white', '#contact', 'contact')}
+			<div class="fr">
+				${href('white', '#contact', 'contact')}
+			</div>
       ${border('white')}
       <article class="f-5 tl mw8 lh-title white">${text}</article>
     </section>
@@ -98,12 +100,10 @@ function formDescription () {
       <p class="f3 fw7 white">${organizations}</p>
       <p class="f3 white">${partner}</p>
       <div>
-        <span class="salmon di">&#8594;</span>
-        ${contact('salmon', '', 'Access Now Digital Security Helpline')} 
+        ${href('salmon', '', '&#8594;Access Now Digital Security Helpline')} 
       </div>
       <div>
-        <span class="salmon di">&#8594;</span>
-        ${contact('salmon', '', 'Security Without Borders')} 
+        ${href('salmon', '', '&#8594;Security Without Borders')} 
       </div>
     </article>
   `
@@ -115,7 +115,7 @@ function form () {
 			<input class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black mb3" type="text" placeholder="Your organisation name*">
 			<input class="input-reset w-100 pt3 pb6 pr3 pl3 ba b--black" type="text" placeholder="Briefly describe your problem*">
 			<div class="bg-white mb3">
-				<p class="pt3 pl3 pr3">Choose the categories of attack you are facing*</p>
+				<p class="pt3 pl3 pr3 dark-gray">Choose the categories of attack you are facing*</p>
 				<fieldset id="attack-type" class="bw0 flex justify-start">
 					<div class="pr6-l pr4-m">
 						${checkbox('attack one', 'attack1')}
@@ -129,7 +129,21 @@ function form () {
 					</div>
 				</fieldset>
 			</div>
-			<input class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black-20" type="text" placeholder="Contact email address*">
+			<div class="bg-white mb3">
+				<p class="pt3 pl3 pr3 dark-gray">Does the person dealing with this incident speak English?*</p>
+				<fieldset id="speak-english" class="bw0 flex justify-start">
+					<div class="pr7-l pr5-m">
+						${checkbox('YES', 'yes')}
+					</div>
+					<div>
+						${checkbox('NO', 'no')}
+					</div>
+				</fieldset>
+			</div>
+			<input class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black-20 mb3" type="text" placeholder="Contact email address*">
+			<div>
+				<input type="submit" class="pt3 pb3 w-100 white ttu bg-salmon b--transparent br2" value="submit">
+ 			</div>
     </form>
   `
 }
@@ -140,9 +154,9 @@ function border (colour) {
   `
 }
 
-function contact (color, href, text) {
+function href (color, href, text) {
   return html`
-    <a class="fr ttu ${color} no-underline fw7" href=${href}>${text}</a>
+    <a class="ttu ${color} no-underline fw7" href=${href}>${text}</a>
   `
 }
 
@@ -150,7 +164,7 @@ function checkbox (text, name) {
 	return html`
 		<div>
 			<input type="checkbox" id=${name} value=${name}></input>
-			<label for=${name} class="lh-copy">${text}</label>
+			<label for=${name} class="lh-copy dark-gray">${text}</label>
 		</div>
 	`
 }
