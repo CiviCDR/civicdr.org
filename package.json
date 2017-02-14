@@ -7,7 +7,7 @@
     "test": "standard",
     "start": "bankai start",
     "build": "bankai build",
-    "publish": "gh-pages -d dist/"
+    "publish": "npm run build && gh-pages -d dist/"
   },
   "browserify": {
     "transform": [
