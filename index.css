@@ -2,14 +2,32 @@ body {
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 
-.white {
-  color: #fff;
-}
-
 .salmon {
   color: #F06562;
 }
 
+.logo-salmon {
+	fill: #D85B58;
+}
+
+.logo-salmon .st0 {
+	stroke: #D85B58;
+}
+
+.logo-dark .st0 {
+	stroke: #000000;
+}
+
 .bg-salmon {
   background-color: #F06562;
+}
+
+::-webkit-input-placeholder {
+  color: #333;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #333;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #333;
 }
