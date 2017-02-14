@@ -10,6 +10,24 @@ var style = css('./index.css')
 
 var app = choo()
 
+app.model({
+  namespace: 'email',
+  state: { contents: [] },
+  reducers: {
+    send: function (state, data) {
+      return { contents: data }
+    }
+  },
+  effects: {
+    getFormData: function (state, data, send, done) {
+      send('email:send', data, function (err, value) {
+        if (err) return done(err)
+        done(null, value)
+      })
+    }
+  }
+})
+
 function mainView (state, prev, send) {
   addFont()
 
@@ -17,7 +35,7 @@ function mainView (state, prev, send) {
     <body class='${style}'>
       ${intro()}
       ${about()}
-      ${getInTouch()}
+      ${getInTouch(state, prev, send)}
       ${origins()}
       ${footer()}
     </body>
@@ -58,13 +76,13 @@ function about () {
   `
 }
 
-function getInTouch () {
+function getInTouch (state, prev, send) {
   return html`
     <section class="pa3 pr5 pl5 pb5 bg-dark-gray" id="contact">
       ${border('salmon')}
       <article class="flex-ns justify-between mw8">
         ${formDescription()}
-        ${form()}
+        ${form(state, prev, send)}
       </article>
     </section>
   `
@@ -118,28 +136,27 @@ function formDescription () {
   `
 }
 
-function form () {
+function form (state, prev, send) {
   return html`
-    <form class="w-50-ns">
-      <input class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black mb3" type="text" placeholder="Your organisation name*">
-      <input class="input-reset w-100 pt3 pb6 pr3 pl3 ba b--black" type="text" placeholder="Briefly describe your problem*">
+    <form class="w-50-ns" onsubmit=${email}>
+      ${input({ type: 'text', id: 'organisation', placeholder: 'Your organisation name*' })}
+      ${input({ type: 'text', id: 'issue', placeholder: 'Briefly describe your problem*' })}
       <div class="bg-white mb3">
         <p class="pt3 pl3 pr3 dark-gray">Does the person dealing with this incident speak English?*</p>
-        <fieldset id="speak-english" class="bw0">
-          <div class="pr7-l pr5-m di">
-            ${checkbox('YES', 'yes')}
-          </div>
-          <div>
-            ${checkbox('NO', 'no')}
-          </div>
-        </fieldset>
+        ${input({ type: 'radio', id: 'yes', value: 'yes' })}
+        ${input({ type: 'radio', id: 'no', value: 'no' })}
       </div>
-      <input class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black-20 mb3" type="text" placeholder="Contact email address*">
+      ${input({ type: 'email', id: 'email', placeholder: 'Contact Email Address*' })}
       <div>
         <input type="submit" class="pt3 pb3 w-100 white ttu bg-salmon b--transparent br2" value="submit">
       </div>
     </form>
   `
+
+  function email (e) {
+    e.preventDefault()
+    send('email:getFormData', e.target)
+  }
 }
 
 function border (colour) {
@@ -154,12 +171,14 @@ function href (color, href, text) {
   `
 }
 
-function checkbox (text, name) {
+function input (opts) {
+  var id = opts.id || ''
+  var type = opts.type || 'text'
+  var placeholder = opts.placeholder || ''
+  var value = opts.value || ''
+
   return html`
-    <div>
-      <input type="checkbox" id=${name} value=${name}></input>
-      <label for=${name} class="lh-copy dark-gray">${text}</label>
-    </div>
+    <input id=${id} value=${value} class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black-20 mb3" type=${type} required placeholder=${placeholder}>
   `
 }
 

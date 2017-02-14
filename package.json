@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard",
     "start": "bankai start",
-    "build": "bankai build",
+    "build": "bankai build -O",
     "publish": "npm run build && gh-pages -d dist/"
   },
   "browserify": {
@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CiviCDR/civicdr.github.io.git"
+    "url": "git+https://github.com/CiviCDR/civicdr.org.git"
   },
   "author": "Small Media",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CiviCDR/civicdr.github.io/issues"
+    "url": "https://github.com/CiviCDR/civicdr.org/issues"
   },
-  "homepage": "https://github.com/CiviCDR/civicdr.github.io#readme",
+  "homepage": "https://github.com/CiviCDR/civicdr.org#readme",
   "devDependencies": {
     "bankai": "^5.4.0",
     "brfs": "^1.4.3",
