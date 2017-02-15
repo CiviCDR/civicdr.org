@@ -1,3 +1,4 @@
+var concrypt = require('../../concrypt/')
 var mount = require('choo/mount')
 var html = require('choo/html')
 var css = require('sheetify')
@@ -20,7 +21,17 @@ app.model({
   },
   effects: {
     getFormData: function (state, data, send, done) {
-      send('email:send', data, function (err, value) {
+      var contents = []
+      var inputs = document.querySelectorAll('input')
+      for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type !== 'submit') {
+          var item = inputs[i].id + ': ' + inputs[i].value
+          contents.push(item)
+        }
+      }
+
+
+      send('email:send', contents, function (err, value) {
         if (err) return done(err)
         done(null, value)
       })
@@ -141,12 +152,14 @@ function form (state, prev, send) {
     <form class="w-50-ns" onsubmit=${email}>
       ${input({ type: 'text', id: 'organisation', placeholder: 'Your organisation name*' })}
       ${input({ type: 'text', id: 'issue', placeholder: 'Briefly describe your problem*' })}
-      <div class="bg-white mb3">
-        <p class="pt3 pl3 pr3 dark-gray">Does the person dealing with this incident speak English?*</p>
-        ${input({ type: 'radio', id: 'yes', value: 'yes' })}
-        ${input({ type: 'radio', id: 'no', value: 'no' })}
+      <div class="bg-white pa3 w-100 mb3">
+        <p class="dark-gray">Does the person dealing with the incident speak English?*</p>
+        <input id="yes" value="yes" name="english" type="radio">
+        <label for="yes" class="pr4">YES</label>
+        <input id="no" value="no" name="english" type="radio">
+        <label for="no">NO</label>
       </div>
-      ${input({ type: 'email', id: 'email', placeholder: 'Contact Email Address*' })}
+      ${input({ type: 'email', id: 'email', placeholder: 'Contact email address*' })}
       <div>
         <input type="submit" class="pt3 pb3 w-100 white ttu bg-salmon b--transparent br2" value="submit">
       </div>
