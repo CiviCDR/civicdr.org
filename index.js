@@ -6,8 +6,8 @@ var choo = require('choo')
 var path = require('path')
 var fs = require('fs')
 
-;css('tachyons')
 var style = css('./index.css')
+css('tachyons')
 
 var app = choo()
 
@@ -39,7 +39,6 @@ app.model({
       var encrypt = concrypt(opts)
       encrypt.send(function (err, val) {
         if (err) console.log('err', err)
-        console.log(val)
         openEmailClient(val)
       })
     }
@@ -222,7 +221,6 @@ function openEmailClient (content) {
   var email = 'help@civicdr.org'
   var subject = 'CiviCDR Contact Form'
   var mailto = 'mailto:' + email + '?subject=' + subject + '&body=' + content
-  console.log(mailto)
   window.open(mailto, '_self')
 }
 

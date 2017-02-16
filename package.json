@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard",
     "start": "bankai start",
-    "build": "bankai build -O",
+    "build": "bankai build",
     "publish": "npm run build && gh-pages -d dist/"
   },
   "browserify": {
