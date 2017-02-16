@@ -21,19 +21,26 @@ app.model({
   },
   effects: {
     getFormData: function (state, data, send, done) {
-      var contents = []
+      var opts = {}
       var inputs = document.querySelectorAll('input')
+      opts.contents = []
+      opts.pgpKey = fs.readFileSync(path.join(__dirname, '/assets/pub_key'), 'utf8')
+
       for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].type !== 'submit') {
-          var item = inputs[i].id + ': ' + inputs[i].value
-          contents.push(item)
+        var item
+        if (inputs[i].type === 'radio' && inputs[i].checked) {
+          item = inputs[i].name + ': ' + inputs[i].value
+        } else if (inputs[i].type !== 'submit') {
+          item = inputs[i].name + ': ' + inputs[i].value
         }
+        opts.contents.push(item)
       }
 
-
-      send('email:send', contents, function (err, value) {
-        if (err) return done(err)
-        done(null, value)
+      var encrypt = concrypt(opts)
+      encrypt.send(function (err, val) {
+        if (err) console.log('err', err)
+        console.log(val)
+        openEmailClient(val)
       })
     }
   }
@@ -108,6 +115,15 @@ function origins () {
       <article class="tl mw8 lh-copy">
         <h2 class="ttu fw7"> what we do </h2>
         <p class="f3">${origins}</p>
+        <div>
+          ${href('salmon', 'https://drive.google.com/open?id=1gxe4wgtbXNT8OH5jpPDWqZw9EYpuTeMDZFtJJo3Eodc', 'CiviCDR Charter')} 
+        </div>
+        <div>
+          ${href('salmon', 'https://drive.google.com/open?id=1kedb3YwdsDxzsW-kKmEfnABe3fpv0WgNMIc56lcDwgA', 'CiviCDR Code of Practice')} 
+        </div>
+        <div>
+          ${href('salmon', 'https://d2sxu8bam0n8dc.cloudfront.net', 'Security Policy Generator')} 
+        </div>
       </article>
     </section>
   `
@@ -138,10 +154,10 @@ function formDescription () {
       <p class="f3 fw7 white">${organizations}</p>
       <p class="f3 white">${partner}</p>
       <div>
-        ${href('salmon', 'https://www.accessnow.org/help/', '&#8594;Access Now Digital Security Helpline')} 
+        ${href('salmon', 'https://www.accessnow.org/help/', 'Access Now Digital Security Helpline')} 
       </div>
       <div>
-        ${href('salmon', 'https://securitywithoutborders.org/', '&#8594;Security Without Borders')} 
+        ${href('salmon', 'https://securitywithoutborders.org/', 'Security Without Borders')} 
       </div>
     </article>
   `
@@ -150,8 +166,8 @@ function formDescription () {
 function form (state, prev, send) {
   return html`
     <form class="w-50-ns" onsubmit=${email}>
-      ${input({ type: 'text', id: 'organisation', placeholder: 'Your organisation name*' })}
-      ${input({ type: 'text', id: 'issue', placeholder: 'Briefly describe your problem*' })}
+      ${input({ type: 'text', name: 'organisation', placeholder: 'Your organisation name*' })}
+      ${input({ type: 'text', name: 'issue', placeholder: 'Briefly describe your problem*' })}
       <div class="bg-white pa3 w-100 mb3">
         <p class="dark-gray">Does the person dealing with the incident speak English?*</p>
         <input id="yes" value="yes" name="english" type="radio">
@@ -159,7 +175,7 @@ function form (state, prev, send) {
         <input id="no" value="no" name="english" type="radio">
         <label for="no">NO</label>
       </div>
-      ${input({ type: 'email', id: 'email', placeholder: 'Contact email address*' })}
+      ${input({ type: 'email', name: 'email', placeholder: 'Contact email address*' })}
       <div>
         <input type="submit" class="pt3 pb3 w-100 white ttu bg-salmon b--transparent br2" value="submit">
       </div>
@@ -188,10 +204,10 @@ function input (opts) {
   var id = opts.id || ''
   var type = opts.type || 'text'
   var placeholder = opts.placeholder || ''
-  var value = opts.value || ''
+  var name = opts.name || ''
 
   return html`
-    <input id=${id} value=${value} class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black-20 mb3" type=${type} required placeholder=${placeholder}>
+    <input id=${id} name=${name} class="input-reset w-100 pt3 pb4 pr3 pl3 ba b--black-20 mb3" type=${type} placeholder=${placeholder}>
   `
 }
 
@@ -200,6 +216,14 @@ function toHtml (item) {
   element.innerHTML = item
 
   return element.childNodes[0]
+}
+
+function openEmailClient (content) {
+  var email = 'help@civicdr.org'
+  var subject = 'CiviCDR Contact Form'
+  var mailto = 'mailto:' + email + '?subject=' + subject + '&body=' + content
+  console.log(mailto)
+  window.open(mailto, '_self')
 }
 
 function addFont () {
