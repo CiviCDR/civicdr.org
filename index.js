@@ -1,4 +1,4 @@
-var concrypt = require('../../concrypt/')
+var concrypt = require('./encrypt.js')
 var mount = require('choo/mount')
 var html = require('choo/html')
 var css = require('sheetify')
