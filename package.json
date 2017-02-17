@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard",
     "start": "bankai start",
-    "build": "bankai build && browserify -t sheetify/transform index.js > dist/bundle.js",
+    "build": "bankai build && cp CNAME dist/CNAME && browserify -t sheetify/transform index.js > dist/bundle.js",
     "publish": "npm run build && gh-pages -d dist/"
   },
   "browserify": {
