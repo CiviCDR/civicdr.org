@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard",
     "start": "bankai start",
-    "build": "bankai build",
+    "build": "bankai build && browserify -t sheetify/transform index.js > dist/bundle.js",
     "publish": "npm run build && gh-pages -d dist/"
   },
   "browserify": {
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "choo": "^4.1.0",
+    "kbpgp": "^2.0.62",
     "tachyons": "^4.6.2"
   }
 }
