@@ -1,4 +1,4 @@
-var concrypt = require('./encrypt.js')
+var PgpContent = require('pgp-encrypt-content')
 var mount = require('choo/mount')
 var html = require('choo/html')
 var css = require('sheetify')
@@ -36,8 +36,8 @@ app.model({
         opts.contents.push(item)
       }
 
-      var encrypt = concrypt(opts)
-      encrypt.send(function (err, val) {
+      var pgpContent = PgpContent(opts)
+      pgpContent.send(function (err, val) {
         if (err) console.log('err', err)
         openEmailClient(val)
       })
