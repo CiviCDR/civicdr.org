@@ -115,7 +115,7 @@ function origins () {
         <h2 class="ttu fw7"> what we do </h2>
         <p class="f3">${origins}</p>
         <div>
-          ${href('salmon', 'https://d2sxu8bam0n8dc.cloudfront.net', 'Security Policy Generator')} 
+          ${href('salmon', 'https://d2sxu8bam0n8dc.cloudfront.net', 'Security Policy Generator')}  
         </div>
       </article>
     </section>
