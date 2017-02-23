@@ -116,13 +116,7 @@ function origins () {
         <h2 class="ttu fw7"> what we do </h2>
         <p class="f3">${origins}</p>
         <div>
-          ${href('salmon', 'https://drive.google.com/open?id=1gxe4wgtbXNT8OH5jpPDWqZw9EYpuTeMDZFtJJo3Eodc', 'CiviCDR Charter')} 
-        </div>
-        <div>
-          ${href('salmon', 'https://drive.google.com/open?id=1kedb3YwdsDxzsW-kKmEfnABe3fpv0WgNMIc56lcDwgA', 'CiviCDR Code of Practice')} 
-        </div>
-        <div>
-          ${href('salmon', 'https://d2sxu8bam0n8dc.cloudfront.net', 'Security Policy Generator')} 
+          ${href('salmon', 'https://d2sxu8bam0n8dc.cloudfront.net', 'Security Policy Generator')}  
         </div>
       </article>
     </section>
