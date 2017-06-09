@@ -114,9 +114,6 @@ function origins () {
       <article class="tl mw8 lh-copy">
         <h2 class="ttu fw7"> what we do </h2>
         <p class="f3">${origins}</p>
-        <div>
-          ${href('salmon', 'https://d2sxu8bam0n8dc.cloudfront.net', 'Security Policy Generator')}  
-        </div>
       </article>
     </section>
   `
@@ -147,10 +144,10 @@ function formDescription () {
       <p class="f3 fw7 white">${organizations}</p>
       <p class="f3 white">${partner}</p>
       <div>
-        ${href('salmon', 'https://www.accessnow.org/help/', 'Access Now Digital Security Helpline')} 
+        ${href('salmon', 'https://www.accessnow.org/help/', 'Access Now Digital Security Helpline')}
       </div>
       <div>
-        ${href('salmon', 'https://securitywithoutborders.org/', 'Security Without Borders')} 
+        ${href('salmon', 'https://securitywithoutborders.org/', 'Security Without Borders')}
       </div>
     </article>
   `
